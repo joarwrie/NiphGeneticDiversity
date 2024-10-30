@@ -202,6 +202,6 @@ fig1=cowplot::plot_grid(map_auerb, map_fonta, map_luchof, map_thiene, map_tonyw,
                         align="hv")
 
 # Export
-pdf("6-Temporary_results/Phylogeo/For_publication/Figures/Figure1_v4.pdf", width=17, height=15)
-fig1
+pdf("Figure1.pdf", width=17, height=15)
+  fig1
 dev.off()
