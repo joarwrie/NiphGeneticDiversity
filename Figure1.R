@@ -13,7 +13,6 @@ library(ggspatial)
   # This shapefile with borders for all countries of the world can be downloaded at https://hub.arcgis.com/datasets/2b93b06dc0dc4e809d3c8db5cb96ba69_0/explore
 border=sf::st_read("World_Countries_Generalized.shp") # read shapefile.
 border_CH=border[border$COUNTRY %in% c("Switzerland", "Germany", "Liechtenstein", "Austria", "Italy", "France"),]
-border_CH_SC=st_transform(border_CH, 2056)
 
 # Load LGM data
   # This shapefile can be downloaded at https://data.geo.admin.ch/ch.swisstopo.geologie-eiszeit-lgm/
