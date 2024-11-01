@@ -295,6 +295,6 @@ fig3=cowplot::plot_grid(Map_pi_auerb, Map_pi_fontanus, Map_pi_luchof, Map_pi_thi
                         ncol=2, nrow=3, 
                         align="v")
 
-pdf("6-Temporary_results/Phylogeo/For_publication/Figures/Figure3_final.pdf", width=20, height=17)
+pdf("Figure3.pdf", width=18, height=17)
   fig3
 dev.off()
