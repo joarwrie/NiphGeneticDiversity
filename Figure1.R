@@ -63,6 +63,7 @@ SPpoints[SPpoints$geometry %in% SPpoints[SPpoints$species=="Niphargus auerbachi"
 SPpoints$DNA_auerb=paste(SPpoints$auerbachi, SPpoints$DNA_auerb, sep="_")
   # Ordering the factor levels for plotting
 SPpoints$DNA_auerb=factor(SPpoints$DNA_auerb, levels=c("Yes_Yes", "Yes_No", "No_No"))
+SPpoints=SPpoints[order(SPpoints$DNA_auerb, decreasing = T),]
 
 # Column for Niphargus fontanus
   # Figuring out if the species is present
@@ -75,6 +76,7 @@ SPpoints[SPpoints$geometry%in%SPpoints[SPpoints$species=="Niphargus fontanus" & 
 SPpoints$DNA_fonta=paste(SPpoints$fontanus, SPpoints$DNA_fonta, sep="_")
   # Ordering the factor levels for plotting
 SPpoints$DNA_fonta=factor(SPpoints$DNA_fonta, levels=c("Yes_Yes", "Yes_No", "No_No"))
+SPpoints=SPpoints[order(SPpoints$DNA_fonta, decreasing = T),]
 
 # Column for Niphargus luchoffmanni
   # Figuring out if the species is present
@@ -87,6 +89,7 @@ SPpoints[SPpoints$geometry%in%SPpoints[SPpoints$species=="Niphargus luchoffmanni
 SPpoints$DNA_luchof=paste(SPpoints$luchoffmanni, SPpoints$DNA_luchof, sep="_")
   # Ordering the factor levels for plotting 
 SPpoints$DNA_luchof=factor(SPpoints$DNA_luchof, levels=c("Yes_Yes", "Yes_No", "No_No"))
+SPpoints=SPpoints[order(SPpoints$DNA_luchof, decreasing = T),]
 
 # Column for Niphargus thienemanni
   # Figuring out if the species is present
@@ -99,6 +102,7 @@ SPpoints[SPpoints$geometry%in%SPpoints[SPpoints$species=="Niphargus thienemanni"
 SPpoints$DNA_thiene=paste(SPpoints$thienemanni, SPpoints$DNA_thiene, sep="_")
   # Ordering the factor levels for plotting
 SPpoints$DNA_thiene=factor(SPpoints$DNA_thiene, levels=c("Yes_Yes", "Yes_No", "No_No"))
+SPpoints=SPpoints[order(SPpoints$DNA_thiene, decreasing = T),]
 
 # Column for Niphargus tonywhitteni
   # Figuring out if the species is present
@@ -111,6 +115,7 @@ SPpoints[SPpoints$geometry%in%SPpoints[SPpoints$species=="Niphargus tonywhitteni
 SPpoints$DNA_tonyw=paste(SPpoints$tonywhitteni, SPpoints$DNA_tonyw, sep="_")
   # Ordering the factor levels for plotting
 SPpoints$DNA_tonyw=factor(SPpoints$DNA_tonyw, levels=c("Yes_Yes", "Yes_No", "No_No"))
+SPpoints=SPpoints[order(SPpoints$DNA_tonyw, decreasing = T),]
 
 # Plotting a map for each species
 # Fig. 1a
