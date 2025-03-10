@@ -6,6 +6,7 @@ library(ggplot2)
 library(sf)
 library(pegas)
 library(cowplot)
+library(ggspatial)
 
 #################
 # Importing data
