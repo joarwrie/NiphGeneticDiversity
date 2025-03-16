@@ -28,7 +28,7 @@ border_CH_SC=st_transform(border_CH, 2056)
 # Map aquifer type
   # This shapefile can be downloaded at https://data.geo.admin.ch/ch.bafu.hydrogeologie-uebersichtskarte/data.zip
   # Version of this map: 17.09.2021
-Hydrogeo=st_read("Hydrogeologische_LV95/HydrogeologischeSkizze.shp")
+Hydrogeo=st_read("HydrogeologischeSkizze.shp")
 
 # Load LGM data
   # This shapefile can be downloaded at https://data.geo.admin.ch/ch.swisstopo.geologie-eiszeit-lgm/
