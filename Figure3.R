@@ -134,7 +134,7 @@ Map_pi_auerb=ggplot() +
   geom_raster(data=Interpol_auerb, aes(x=CoordX, y=CoordY, fill=var1.pred)) +
   theme(panel.background=element_rect(fill="white", colour="black"), axis.line=element_line(colour="black"), panel.border=element_rect(colour="black", linewidth = 2, fill=NA)) +
   theme(axis.text.x=element_text(size=14), axis.text.y=element_text(size=14), axis.title=element_blank(), legend.position="right") +
-  scale_fill_gradientn(colours = c(NA, alpha(c("#f3e79b", "#fac484", "#f8a07e", "#eb7f86", "#ce6693", "#a059a0", "#5c53a5", "midnightblue"), 0.5)), limits=c(0,max(Interpol_auerb$var1.pred))) +
+  scale_fill_gradientn(colours = c(NA, alpha(c("#f3e79b", "#fac484", "#f8a07e", "#eb7f86", "#ce6693", "#a059a0", "#5c53a5", "midnightblue"), 0.9)), limits=c(0,max(Interpol_auerb$var1.pred))) +
   guides(fill = guide_colorbar(alpha=1)) +
   scale_x_continuous(limits=c(2500000, 2820000)) +
   scale_y_continuous(limits=c(1080000, 1290000)) +
@@ -164,7 +164,7 @@ Map_pi_fontanus=ggplot() +
   geom_raster(data=Interpol_fontanus, aes(x=CoordX, y=CoordY, fill=var1.pred)) +
   theme(panel.background=element_rect(fill="white", colour="black"), axis.line=element_line(colour="black"), panel.border=element_rect(colour="black", linewidth = 2, fill=NA)) +
   theme(axis.text.x=element_text(size=14), axis.text.y=element_text(size=14), axis.title=element_blank(), legend.position="right") +
-  scale_fill_gradientn(colours = c(NA, alpha(c("#f3e79b", "#fac484", "#f8a07e", "#eb7f86", "#ce6693", "#a059a0", "#5c53a5", "midnightblue"), 0.5)), limits=c(0,max(Interpol_fontanus$var1.pred))) +
+  scale_fill_gradientn(colours = c(NA, alpha(c("#f3e79b", "#fac484", "#f8a07e", "#eb7f86", "#ce6693", "#a059a0", "#5c53a5", "midnightblue"), 0.9)), limits=c(0,max(Interpol_fontanus$var1.pred))) +
   guides(fill = guide_colorbar(alpha=1)) +
   scale_x_continuous(limits=c(2500000, 2820000)) +
   scale_y_continuous(limits=c(1080000, 1290000)) +
@@ -194,7 +194,7 @@ Map_pi_luchof=ggplot() +
   geom_raster(data=Interpol_luchof, aes(x=CoordX, y=CoordY, fill=var1.pred)) +
   theme(panel.background=element_rect(fill="white", colour="black"), axis.line=element_line(colour="black"), panel.border=element_rect(colour="black", linewidth = 2, fill=NA)) +
   theme(axis.text.x=element_text(size=14), axis.text.y=element_text(size=14), axis.title=element_blank(), legend.position="right") +
-  scale_fill_gradientn(colours = c(NA, alpha(c("#f3e79b", "#fac484", "#f8a07e", "#eb7f86", "#ce6693", "#a059a0", "#5c53a5", "midnightblue"), 0.5)), limits=c(0,max(Interpol_luchof$var1.pred))) +
+  scale_fill_gradientn(colours = c(NA, alpha(c("#f3e79b", "#fac484", "#f8a07e", "#eb7f86", "#ce6693", "#a059a0", "#5c53a5", "midnightblue"), 0.9)), limits=c(0,max(Interpol_luchof$var1.pred))) +
   guides(fill = guide_colorbar(alpha=1)) +
   scale_x_continuous(limits=c(2500000, 2820000)) +
   scale_y_continuous(limits=c(1080000, 1290000)) +
@@ -224,7 +224,7 @@ Map_pi_thiene=ggplot() +
   geom_raster(data=Interpol_thiene, aes(x=CoordX, y=CoordY, fill=var1.pred)) +
   theme(panel.background=element_rect(fill="white", colour="black"), axis.line=element_line(colour="black"), panel.border=element_rect(colour="black", linewidth = 2, fill=NA)) +
   theme(axis.text.x=element_text(size=14), axis.text.y=element_text(size=14), axis.title=element_blank(), legend.position="right") +
-  scale_fill_gradientn(colours = c(NA, alpha(c("#f3e79b", "#fac484", "#f8a07e", "#eb7f86", "#ce6693", "#a059a0", "#5c53a5", "midnightblue"), 0.5)), limits=c(0,max(Interpol_thiene$var1.pred))) +
+  scale_fill_gradientn(colours = c(NA, alpha(c("#f3e79b", "#fac484", "#f8a07e", "#eb7f86", "#ce6693", "#a059a0", "#5c53a5", "midnightblue"), 0.9)), limits=c(0,max(Interpol_thiene$var1.pred))) +
   guides(fill = guide_colorbar(alpha=1)) +
   scale_x_continuous(limits=c(2500000, 2820000)) +
   scale_y_continuous(limits=c(1080000, 1290000)) +
@@ -254,7 +254,7 @@ Map_pi_tonyw=ggplot() +
   geom_raster(data=Interpol_tonyw, aes(x=CoordX, y=CoordY, fill=var1.pred)) +
   theme(panel.background=element_rect(fill="white", colour="black"), axis.line=element_line(colour="black"), panel.border=element_rect(colour="black", linewidth = 2, fill=NA)) +
   theme(axis.text.x=element_text(size=14), axis.text.y=element_text(size=14), axis.title=element_blank(), legend.position="right") +
-  scale_fill_gradientn(colours = c(NA, alpha(c("#f3e79b", "#fac484", "#f8a07e", "#eb7f86", "#ce6693", "#a059a0", "#5c53a5", "midnightblue"), 0.5)), limits=c(0,max(Interpol_tonyw$var1.pred))) +
+  scale_fill_gradientn(colours = c(NA, alpha(c("#f3e79b", "#fac484", "#f8a07e", "#eb7f86", "#ce6693", "#a059a0", "#5c53a5", "midnightblue"), 0.9)), limits=c(0,max(Interpol_tonyw$var1.pred))) +
   guides(fill = guide_colorbar(alpha=1)) +
   scale_x_continuous(limits=c(2500000, 2820000)) +
   scale_y_continuous(limits=c(1080000, 1290000)) +
