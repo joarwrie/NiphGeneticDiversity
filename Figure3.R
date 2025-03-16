@@ -106,27 +106,25 @@ Pi_thiene=SlidingWindow("Niphargus_thienemanni", thiene)
 Pi_tonyw=SlidingWindow("Niphargus_tonywhitteni", tonyw)
 
 # Kringing to interpolate data
-  # First we create a grid with 2 x 2 Km cells (The table contains central points for each cell) 
+# First we create a grid with 2 x 2 Km cells (The table contains central points for each cell) 
 grid=data.frame(CoordX=rep(seq(2450000, 2860000, 2000), 131), CoordY=rep(seq(1050000, 1310000, 2000), each=206))
 grid=st_as_sf(x=grid, coords=c("CoordX", "CoordY"), dim="XY")
 
-  # Then, for each species We interpolate values of Pi for a denser grid of coordinates than the sliding window
+# Then, for each species We interpolate values of Pi for a denser grid of coordinates than the sliding window
 # Niphargus auerbachi
-    # Transformation of the output table into a sf object
+# Transformation of the output table into a sf object
 SF_input=st_as_sf(x=Pi_auerb[,1:3], coords=c("midpointX", "midpointY"), dim="XY")
-    # Extrapolating values with the autoKrige function
+# Extrapolating values with the autoKrige function
 Pi_interpol=autoKrige(Pi~1, SF_input, grid)
-    # Creating a table for plotting
+# Creating a table for plotting
 Interpol_auerb=Pi_interpol[[1]]
 Interpol_auerb$CoordX=st_coordinates(Interpol_auerb)[,1]
 Interpol_auerb$CoordY=st_coordinates(Interpol_auerb)[,2]
 Interpol_auerb=st_set_crs(Interpol_auerb, 2056)
 Interpol_auerb[Interpol_auerb$var1.pred<0,]$var1.pred=0
-    # Then we interpolate a value of Pi for each sampled point
-SP_auerb=unique(HapTable[HapTable$species=="Niphargus_auerbachi",5:6])
-SP_auerb=st_as_sf(SP_auerb, coords=c("longitude", "latitude"), dim="XY")
-SP_auerb=st_set_crs(SP_auerb, 21781)
-SP_Pi_auerb=autoKrige(Pi~1, SF_input, st_transform(SP_auerb, 2056))
+# Then we interpolate a value of Pi for each sampled point
+SP_auerb=unique(HapTable[HapTable$species=="Niphargus_auerbachi",0])
+SP_Pi_auerb=autoKrige(Pi~1, SF_input, SP_auerb)
 
 # Plotting Fig. 3A
 Map_pi_auerb=ggplot() +
@@ -136,7 +134,7 @@ Map_pi_auerb=ggplot() +
   geom_raster(data=Interpol_auerb, aes(x=CoordX, y=CoordY, fill=var1.pred)) +
   theme(panel.background=element_rect(fill="white", colour="black"), axis.line=element_line(colour="black"), panel.border=element_rect(colour="black", linewidth = 2, fill=NA)) +
   theme(axis.text.x=element_text(size=14), axis.text.y=element_text(size=14), axis.title=element_blank(), legend.position="right") +
-  scale_fill_gradientn(colours = c(NA, alpha(c("#f3e79b", "#fac484", "#f8a07e", "#eb7f86", "#ce6693", "#a059a0", "#5c53a5", "midnightblue"), 0.9)), limits=c(0,max(Interpol_auerb$var1.pred))) +
+  scale_fill_gradientn(colours = c(NA, alpha(c("#f3e79b", "#fac484", "#f8a07e", "#eb7f86", "#ce6693", "#a059a0", "#5c53a5", "midnightblue"), 0.5)), limits=c(0,max(Interpol_auerb$var1.pred))) +
   guides(fill = guide_colorbar(alpha=1)) +
   scale_x_continuous(limits=c(2500000, 2820000)) +
   scale_y_continuous(limits=c(1080000, 1290000)) +
@@ -144,21 +142,19 @@ Map_pi_auerb=ggplot() +
   annotation_north_arrow(location = "br")
 
 # Niphargus fontanus
-    # Transformation of the output table into a sf object
+# Transformation of the output table into a sf object
 SF_input=st_as_sf(x=Pi_fontanus[,1:3], coords=c("midpointX", "midpointY"), dim="XY")
-    # Extrapolating values with the autoKrige function
+# Extrapolating values with the autoKrige function
 Pi_interpol=autoKrige(Pi~1, SF_input, grid)
-    # Creating a table for plotting
+# Creating a table for plotting
 Interpol_fontanus=Pi_interpol[[1]]
 Interpol_fontanus$CoordX=st_coordinates(Interpol_fontanus)[,1]
 Interpol_fontanus$CoordY=st_coordinates(Interpol_fontanus)[,2]
 Interpol_fontanus=st_set_crs(Interpol_fontanus, 2056)
 Interpol_fontanus[Interpol_fontanus$var1.pred<0,]$var1.pred=0
-    # Then we interpolate a value of Pi for each sampled point
-SP_fontanus=unique(HapTable[HapTable$species=="Niphargus_fontanus",5:6])
-SP_fontanus=st_as_sf(SP_fontanus, coords=c("longitude", "latitude"), dim="XY")
-SP_fontanus=st_set_crs(SP_fontanus, 21781)
-SP_Pi_fontanus=autoKrige(Pi~1, SF_input, st_transform(SP_fontanus, 2056))
+# Then we interpolate a value of Pi for each sampled point
+SP_fontanus=unique(HapTable[HapTable$species=="Niphargus_fontanus",0])
+SP_Pi_fontanus=autoKrige(Pi~1, SF_input, SP_fontanus)
 
 # Fig. 3B
 Map_pi_fontanus=ggplot() +
@@ -168,7 +164,7 @@ Map_pi_fontanus=ggplot() +
   geom_raster(data=Interpol_fontanus, aes(x=CoordX, y=CoordY, fill=var1.pred)) +
   theme(panel.background=element_rect(fill="white", colour="black"), axis.line=element_line(colour="black"), panel.border=element_rect(colour="black", linewidth = 2, fill=NA)) +
   theme(axis.text.x=element_text(size=14), axis.text.y=element_text(size=14), axis.title=element_blank(), legend.position="right") +
-  scale_fill_gradientn(colours = c(NA, alpha(c("#f3e79b", "#fac484", "#f8a07e", "#eb7f86", "#ce6693", "#a059a0", "#5c53a5", "midnightblue"), 0.9)), limits=c(0,max(Interpol_fontanus$var1.pred))) +
+  scale_fill_gradientn(colours = c(NA, alpha(c("#f3e79b", "#fac484", "#f8a07e", "#eb7f86", "#ce6693", "#a059a0", "#5c53a5", "midnightblue"), 0.5)), limits=c(0,max(Interpol_fontanus$var1.pred))) +
   guides(fill = guide_colorbar(alpha=1)) +
   scale_x_continuous(limits=c(2500000, 2820000)) +
   scale_y_continuous(limits=c(1080000, 1290000)) +
@@ -176,21 +172,19 @@ Map_pi_fontanus=ggplot() +
   annotation_north_arrow(location = "br")
 
 # Niphargus luchoffmanni
-   # Transformation of the output table into a sf object
+# Transformation of the output table into a sf object
 SF_input=st_as_sf(x=Pi_luchof[,1:3], coords=c("midpointX", "midpointY"), dim="XY")
-    # Extrapolating values with the autoKrige function
+# Extrapolating values with the autoKrige function
 Pi_interpol=autoKrige(Pi~1, SF_input, grid)
-    # Creating a table for plotting
+# Creating a table for plotting
 Interpol_luchof=Pi_interpol[[1]]
 Interpol_luchof$CoordX=st_coordinates(Interpol_luchof)[,1]
 Interpol_luchof$CoordY=st_coordinates(Interpol_luchof)[,2]
 Interpol_luchof=st_set_crs(Interpol_luchof, 2056)
 Interpol_luchof[Interpol_luchof$var1.pred<0,]$var1.pred=0
-    # Then we interpolate a value of Pi for each sampled point
-SP_luchof=unique(HapTable[HapTable$species=="Niphargus_luchoffmanni",5:6])
-SP_luchof=st_as_sf(SP_luchof, coords=c("longitude", "latitude"), dim="XY")
-SP_luchof=st_set_crs(SP_luchof, 21781)
-SP_Pi_luchof=autoKrige(Pi~1, SF_input, st_transform(SP_luchof, 2056))
+# Then we interpolate a value of Pi for each sampled point
+SP_luchof=unique(HapTable[HapTable$species=="Niphargus_luchoffmanni",0])
+SP_Pi_luchof=autoKrige(Pi~1, SF_input, SP_luchof)
 
 # Fig. 3C
 Map_pi_luchof=ggplot() +
@@ -200,7 +194,7 @@ Map_pi_luchof=ggplot() +
   geom_raster(data=Interpol_luchof, aes(x=CoordX, y=CoordY, fill=var1.pred)) +
   theme(panel.background=element_rect(fill="white", colour="black"), axis.line=element_line(colour="black"), panel.border=element_rect(colour="black", linewidth = 2, fill=NA)) +
   theme(axis.text.x=element_text(size=14), axis.text.y=element_text(size=14), axis.title=element_blank(), legend.position="right") +
-  scale_fill_gradientn(colours = c(NA, alpha(c("#f3e79b", "#fac484", "#f8a07e", "#eb7f86", "#ce6693", "#a059a0", "#5c53a5", "midnightblue"), 0.9)), limits=c(0,max(Interpol_luchof$var1.pred))) +
+  scale_fill_gradientn(colours = c(NA, alpha(c("#f3e79b", "#fac484", "#f8a07e", "#eb7f86", "#ce6693", "#a059a0", "#5c53a5", "midnightblue"), 0.5)), limits=c(0,max(Interpol_luchof$var1.pred))) +
   guides(fill = guide_colorbar(alpha=1)) +
   scale_x_continuous(limits=c(2500000, 2820000)) +
   scale_y_continuous(limits=c(1080000, 1290000)) +
@@ -208,21 +202,19 @@ Map_pi_luchof=ggplot() +
   annotation_north_arrow(location = "br")
 
 # Niphargus thienemanni
-    # Transformation of the output table into a sf object
+# Transformation of the output table into a sf object
 SF_input=st_as_sf(x=Pi_thiene[,1:3], coords=c("midpointX", "midpointY"), dim="XY")
-    # Extrapolating values with the autoKrige function
+# Extrapolating values with the autoKrige function
 Pi_interpol=autoKrige(Pi~1, SF_input, grid)
-    # Creating a table for plotting
+# Creating a table for plotting
 Interpol_thiene=Pi_interpol[[1]]
 Interpol_thiene$CoordX=st_coordinates(Interpol_thiene)[,1]
 Interpol_thiene$CoordY=st_coordinates(Interpol_thiene)[,2]
 Interpol_thiene=st_set_crs(Interpol_thiene, 2056)
 Interpol_thiene[Interpol_thiene$var1.pred<0,]$var1.pred=0
-    # Then we interpolate a value of Pi for each sampled point
-SP_thiene=unique(HapTable[HapTable$species=="Niphargus_thienemanni",5:6])
-SP_thiene=st_as_sf(SP_thiene, coords=c("longitude", "latitude"), dim="XY")
-SP_thiene=st_set_crs(SP_thiene, 21781)
-SP_Pi_thiene=autoKrige(Pi~1, SF_input, st_transform(SP_thiene, 2056))
+# Then we interpolate a value of Pi for each sampled point
+SP_thiene=unique(HapTable[HapTable$species=="Niphargus_thienemanni",0])
+SP_Pi_thiene=autoKrige(Pi~1, SF_input, SP_thiene)
 
 # Fig. 3D
 Map_pi_thiene=ggplot() +
@@ -232,7 +224,7 @@ Map_pi_thiene=ggplot() +
   geom_raster(data=Interpol_thiene, aes(x=CoordX, y=CoordY, fill=var1.pred)) +
   theme(panel.background=element_rect(fill="white", colour="black"), axis.line=element_line(colour="black"), panel.border=element_rect(colour="black", linewidth = 2, fill=NA)) +
   theme(axis.text.x=element_text(size=14), axis.text.y=element_text(size=14), axis.title=element_blank(), legend.position="right") +
-  scale_fill_gradientn(colours = c(NA, alpha(c("#f3e79b", "#fac484", "#f8a07e", "#eb7f86", "#ce6693", "#a059a0", "#5c53a5", "midnightblue"), 0.9)), limits=c(0,max(Interpol_thiene$var1.pred))) +
+  scale_fill_gradientn(colours = c(NA, alpha(c("#f3e79b", "#fac484", "#f8a07e", "#eb7f86", "#ce6693", "#a059a0", "#5c53a5", "midnightblue"), 0.5)), limits=c(0,max(Interpol_thiene$var1.pred))) +
   guides(fill = guide_colorbar(alpha=1)) +
   scale_x_continuous(limits=c(2500000, 2820000)) +
   scale_y_continuous(limits=c(1080000, 1290000)) +
@@ -240,21 +232,19 @@ Map_pi_thiene=ggplot() +
   annotation_north_arrow(location = "br")
 
 # Niphargus tonywhitteni
-    # Transformation of the output table into a sf object
+# Transformation of the output table into a sf object
 SF_input=st_as_sf(x=Pi_tonyw[,1:3], coords=c("midpointX", "midpointY"), dim="XY")
-    # Extrapolating values with the autoKrige function
+# Extrapolating values with the autoKrige function
 Pi_interpol=autoKrige(Pi~1, SF_input, grid)
-    # Creating a table for plotting
+# Creating a table for plotting
 Interpol_tonyw=Pi_interpol[[1]]
 Interpol_tonyw$CoordX=st_coordinates(Interpol_tonyw)[,1]
 Interpol_tonyw$CoordY=st_coordinates(Interpol_tonyw)[,2]
 Interpol_tonyw=st_set_crs(Interpol_tonyw, 2056)
 Interpol_tonyw[Interpol_tonyw$var1.pred<0,]$var1.pred=0
-    # Then we interpolate a value of Pi for each sampled point
-SP_tonyw=unique(HapTable[HapTable$species=="Niphargus_tonywhitteni",5:6])
-SP_tonyw=st_as_sf(SP_tonyw, coords=c("longitude", "latitude"), dim="XY")
-SP_tonyw=st_set_crs(SP_tonyw, 21781)
-SP_Pi_tonyw=autoKrige(Pi~1, SF_input, st_transform(SP_tonyw, 2056))
+# Then we interpolate a value of Pi for each sampled point
+SP_tonyw=unique(HapTable[HapTable$species=="Niphargus_tonywhitteni",0])
+SP_Pi_tonyw=autoKrige(Pi~1, SF_input, SP_tonyw)
 
 # Fig. 3E
 Map_pi_tonyw=ggplot() +
@@ -264,7 +254,7 @@ Map_pi_tonyw=ggplot() +
   geom_raster(data=Interpol_tonyw, aes(x=CoordX, y=CoordY, fill=var1.pred)) +
   theme(panel.background=element_rect(fill="white", colour="black"), axis.line=element_line(colour="black"), panel.border=element_rect(colour="black", linewidth = 2, fill=NA)) +
   theme(axis.text.x=element_text(size=14), axis.text.y=element_text(size=14), axis.title=element_blank(), legend.position="right") +
-  scale_fill_gradientn(colours = c(NA, alpha(c("#f3e79b", "#fac484", "#f8a07e", "#eb7f86", "#ce6693", "#a059a0", "#5c53a5", "midnightblue"), 0.8)), limits=c(0,max(Interpol_tonyw$var1.pred))) +
+  scale_fill_gradientn(colours = c(NA, alpha(c("#f3e79b", "#fac484", "#f8a07e", "#eb7f86", "#ce6693", "#a059a0", "#5c53a5", "midnightblue"), 0.5)), limits=c(0,max(Interpol_tonyw$var1.pred))) +
   guides(fill = guide_colorbar(alpha=1)) +
   scale_x_continuous(limits=c(2500000, 2820000)) +
   scale_y_continuous(limits=c(1080000, 1290000)) +
@@ -273,12 +263,12 @@ Map_pi_tonyw=ggplot() +
 
 # Fig. 3F - Boxplot showing the distribution of nucleotide diversity depending on the proportion of karst
 # For this plot, we use the interpolated Pi for sampled sites for all species
-  # Combining data for all species in one sf object
+# Combining data for all species in one sf object
 Karst=rbind(SP_Pi_auerb[[1]], SP_Pi_fontanus[[1]], SP_Pi_luchof[[1]], SP_Pi_thiene[[1]], SP_Pi_tonyw[[1]])
-  # Adding karstic information using the intersect between each sampled point and the aquifer map
+# Adding karstic information using the intersect between each sampled point and the aquifer map
 Karst$Geol="AOther aquifer types"
 Karst[lengths(st_intersects(Karst, Hydrogeo[Hydrogeo$aquifertyp==3,]))>0,]$Geol="Karst"
-  # Since kriging can result in negative values, we transform any Pi value below 0 into 0
+# Since kriging can result in negative values, we transform any Pi value below 0 into 0
 Karst[Karst$var1.pred<0,]$var1.pred=0
 
 # Plotting the boxplot
@@ -299,5 +289,5 @@ fig3=cowplot::plot_grid(Map_pi_auerb, Map_pi_fontanus, Map_pi_luchof, Map_pi_thi
                         align="v")
 
 pdf("Figure3.pdf", width=18, height=17)
-  fig3
+fig3
 dev.off()
