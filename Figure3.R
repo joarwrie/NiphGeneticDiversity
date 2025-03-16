@@ -40,8 +40,10 @@ LGM=st_read("LGM500_V.shp")
 ##########################
 # We start by creating a function to perform a sliding window calculation of nucleotide diversity on the Swiss map
 
-# WARNING !!!!!!! This part is based on the Swiss coordinates system (CH1903+). However, since we cannot publish publically precise coordinates for our sampling sites (sensitive information for drinking water wells), the Swiss coordinates are not included in the file Metadata_individuals.txt
-# The actual coordinates can be provided upon request to the authors.
+# Conversion of the coordinates into the swiss coordinate system (CH1903+)
+HapTable=st_as_sf(x=HapTable, coords=c("longitude", "latitude"), dim="XY")
+HapTable=st_set_crs(HapTable, 4326)
+HapTable=st_transform(HapTable, 2056)
 
 SlidingWindow=function(TargetSpecies, TargetTable){
   # Initialisation of the starting point
@@ -66,8 +68,9 @@ SlidingWindow=function(TargetSpecies, TargetTable){
     for (x in seq(startX, endX, step)){
       
       # Selecting individuals that are in the window and performing calculation only if there are more than 1 individual
-      if (length(tab_calc[tab_calc$longitude>x-2000000 & tab_calc$longitude<=x+size-2000000 & tab_calc$latitude<y-1000000 & tab_calc$latitude>=y-size-1000000,1])>1){
-        ind_tmp=TargetTable[which(attributes(TargetTable)$dimnames[[1]] %in% tab_calc[tab_calc$longitude>x-2000000 & tab_calc$longitude<=x+size-2000000 & tab_calc$latitude<y-1000000 & tab_calc$latitude>=y-size-1000000,1]),]
+      tab_cropped=st_crop(tab_calc, xmin=x, xmax=(x+size), ymax=y, ymin=y-size)
+      if (dim(tab_cropped)[1]>2){
+        ind_tmp=TargetTable[which(attributes(TargetTable)$dimnames[[1]] %in% tab_cropped[[1]]),]
         
         # If there are more than 10 individuals in the window, we perform a random selection of 10 individuals and we average the value of nucleotide diversity over 100 iterations
         if(nrow(ind_tmp)>10){
@@ -77,16 +80,16 @@ SlidingWindow=function(TargetSpecies, TargetTable){
             Pi_bootstrap=c(Pi_bootstrap, nuc.div(ind_tmp[seqs,]))
           }
           Pi_tmp=mean(Pi_bootstrap)
-        
-        # If there are between 2 and 10 individuals, we compute the nucleotide without bootstrapping
+          
+          # If there are between 2 and 10 individuals, we compute the nucleotide without bootstrapping
         }else{
           Pi_tmp=nuc.div(ind_tmp)
         }
         
         # Adding information in the output table
         Pi_window=rbind(Pi_window, data.frame(midpointX=x+(size/2), midpointY=y-(size/2), Pi=Pi_tmp, nbInd=nrow(ind_tmp)))
-      
-      # If there are no individuals in the window, all values are set to 0 in the table
+        
+        # If there are no individuals in the window, all values are set to 0 in the table
       }else{
         Pi_window=rbind(Pi_window, data.frame(midpointX=x+(size/2), midpointY=y-(size/2), Pi=0, nbInd=0))
       }
